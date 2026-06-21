@@ -7,6 +7,8 @@ import (
 	"os"
 
 	"github.com/RohitRavindra-dev/devlocal/internal/configs"
+
+	"gopkg.in/yaml.v3"
 )
 
 func createRootDirectory() error {
@@ -32,7 +34,19 @@ func createConfigFile() error {
 }
 
 func seedYamlConfigFile() error {
-	return nil
+	initYamlConfig := configs.DevlocalConfigYaml{
+		Version:  1,
+		Overlook: []string{},
+		Patches:  []string{},
+	}
+
+	data, err := yaml.Marshal(initYamlConfig)
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(filepath.Join(configs.PROJECT_ROOT, configs.CONFIG_FILE_NAME), data, 0644)
 }
 
 func InitilizeDevLocalFilesystem() error {

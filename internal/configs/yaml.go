@@ -1,5 +1,7 @@
 package configs
 
 type DevlocalConfigYaml struct {
-	Version int
+	Version  int
+	Overlook []string
+	Patches  []string
 }

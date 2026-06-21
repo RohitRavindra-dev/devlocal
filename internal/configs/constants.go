@@ -2,7 +2,7 @@ package configs
 
 const (
 	APP_NAME         = "devlocal"
-	PROJECT_ROOT     = ".devlocal"2
+	PROJECT_ROOT     = ".devlocal"
 	CONFIG_FILE_NAME = "config.yaml"
 )
 

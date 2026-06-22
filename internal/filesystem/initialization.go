@@ -14,7 +14,12 @@ import (
 func createRootDirectory() error {
 	_, err := os.Stat(config.PROJECT_ROOT)
 	if err == nil {
-		return fmt.Errorf("%s already exists, please run cleanup", config.PROJECT_ROOT)
+		return fmt.Errorf(
+			"%s is already initialized in this root. "+
+				"To re-initialize, first run `devlocal cleanup` "+
+				"and then rerun `devlocal init`",
+			config.PROJECT_ROOT,
+		)
 	}
 
 	if !os.IsNotExist(err) {

@@ -70,3 +70,34 @@ func InitilizeDevLocalFilesystem() error {
 	}
 	return nil
 }
+
+func ValidateDevLocalFilesystem() error {
+	info, err := os.Stat(config.PROJECT_ROOT)
+
+	if os.IsNotExist(err) {
+		return fmt.Errorf("%s does not exist, please run `devlocal init`", config.PROJECT_ROOT)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	if !info.IsDir() {
+		return fmt.Errorf("%s is not a directory, run `devlocal cleanup` and re-reun `devlocal install`", config.PROJECT_ROOT)
+	}
+
+	for _, file := range []string{config.CONFIG_FILE_NAME} {
+		path := filepath.Join(config.PROJECT_ROOT, file)
+
+		info, err := os.Stat(path)
+		if err != nil {
+			return fmt.Errorf("missing required file: %s, someone done messed up! My advice, setup again", file)
+		}
+
+		if info.IsDir() {
+			return fmt.Errorf("%s should be a file, someone done messed up! My advice, setup again", file)
+		}
+	}
+
+	return nil
+}

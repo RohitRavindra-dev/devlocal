@@ -1,4 +1,4 @@
-package configs
+package config
 
 const (
 	APP_NAME         = "devlocal"

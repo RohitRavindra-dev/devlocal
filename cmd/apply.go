@@ -5,6 +5,8 @@ import (
 
 	"github.com/RohitRavindra-dev/devlocal/internal/filesystem"
 	"github.com/spf13/cobra"
+
+	"github.com/RohitRavindra-dev/devlocal/internal/orchestration/apply"
 )
 
 var applyCmd = &cobra.Command{
@@ -16,9 +18,7 @@ var applyCmd = &cobra.Command{
 		return filesystem.ValidateDevLocalFilesystem()
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// git worktree untrack
-		// apply local changes
-		return nil
+		return apply.Run()
 	},
 }
 

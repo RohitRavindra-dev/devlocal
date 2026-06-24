@@ -12,9 +12,7 @@ func Run() error {
 		return err
 	}
 
-	//TODO
-	for _, file := range config.Overlook {
-		git.SkipWorkTree()
+	git.SkipWorkTree(config.Overlook)
 
-	}
+	return nil
 }

@@ -1,5 +1,6 @@
 package config
 
+// APP constants
 const (
 	APP_NAME         = "devlocal"
 	PROJECT_ROOT     = ".devlocal"

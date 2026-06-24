@@ -16,8 +16,8 @@ var applyCmd = &cobra.Command{
 		return filesystem.ValidateDevLocalFilesystem()
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// apply local changes
 		// git worktree untrack
+		// apply local changes
 		return nil
 	},
 }

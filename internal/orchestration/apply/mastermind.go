@@ -1,9 +1,28 @@
 package apply
 
 import (
+	"fmt"
+
 	"github.com/RohitRavindra-dev/devlocal/internal/filesystem"
 	"github.com/RohitRavindra-dev/devlocal/internal/git"
 )
+
+func applyOverlook(overlookFiles []string) error {
+	fmt.Println("[Running] git skip worktree for files: ", overlookFiles)
+	if len(overlookFiles) == 0 {
+		fmt.Println("[Warn] No files found in overlook section of devlocal config, skipping")
+		return nil
+	}
+
+	if err := git.SkipWorkTree(overlookFiles); err != nil {
+		return err
+	}
+
+	fmt.Println("[Complted] git skip worktree")
+
+	return nil
+
+}
 
 func Run() error {
 	config, err := filesystem.LoadDevlocalConfig()
@@ -12,7 +31,10 @@ func Run() error {
 		return err
 	}
 
-	git.SkipWorkTree(config.Overlook)
+	// overlook files
+	if overlookErr := applyOverlook(config.Overlook); overlookErr != nil {
+		return overlookErr
+	}
 
 	return nil
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/RohitRavindra-dev/devlocal/internal/filesystem"
 	"github.com/spf13/cobra"
 
-	"github.com/RohitRavindra-dev/devlocal/internal/orchestration/apply"
+	"github.com/RohitRavindra-dev/devlocal/internal/service/apply"
 )
 
 var applyCmd = &cobra.Command{

@@ -36,5 +36,7 @@ func Run() error {
 		return overlookErr
 	}
 
+	// TODO: apply patches
+
 	return nil
 }

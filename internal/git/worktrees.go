@@ -74,3 +74,18 @@ func sanitizeToTrackedFiles(files []string) []string {
 	return filesTracked
 
 }
+
+func IsSkipWorktree(file string) (bool, error) {
+	out, err := exec.Command(
+		"git",
+		"ls-files",
+		"-v",
+		file,
+	).CombinedOutput()
+
+	if err != nil {
+		return false, err
+	}
+
+	return len(out) > 0 && out[0] == 'S', nil
+}

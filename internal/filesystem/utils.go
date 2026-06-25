@@ -1,6 +1,7 @@
 package filesystem
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -8,18 +9,22 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func exists(path string) (bool, error) {
-	_, err := os.Stat(path)
-
-	if err == nil {
-		return true, nil
-	}
+func FileExists(path string) (bool, error) {
+	info, err := os.Stat(path)
 
 	if os.IsNotExist(err) {
-		return false, nil
+		return false, fmt.Errorf("%s does not exist", path)
 	}
 
-	return false, err
+	if err != nil {
+		return false, err
+	}
+
+	if info.IsDir() {
+		return false, fmt.Errorf("%s is a directory, expected a file", path)
+	}
+
+	return true, nil
 }
 
 func LoadDevlocalConfig() (*config.DevlocalConfigYaml, error) {

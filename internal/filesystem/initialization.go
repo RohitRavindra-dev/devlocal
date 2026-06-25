@@ -68,6 +68,8 @@ func InitilizeDevLocalFilesystem() error {
 	if err := seedYamlConfigFile(); err != nil {
 		return err
 	}
+
+	fmt.Println("[Completed] initializing devlocal setup for your repo")
 	return nil
 }
 

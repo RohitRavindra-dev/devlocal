@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/RohitRavindra-dev/devlocal/internal/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -8,6 +10,9 @@ import (
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize devlocal in this project workspace",
+	PreRun: func(cmd *cobra.Command, args []string) {
+		fmt.Println("[Started] to init devlocal for you, dw!")
+	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return filesystem.InitilizeDevLocalFilesystem()
 	},

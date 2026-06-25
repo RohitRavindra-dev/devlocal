@@ -13,7 +13,7 @@ var applyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Apply .devlocal changes that makes the project ready for local developement",
 	PreRunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("Attempting to apply devlocal changes")
+		fmt.Println("[Started] to apply devlocal changes")
 		// check for setup
 		return filesystem.ValidateDevLocalFilesystem()
 	},

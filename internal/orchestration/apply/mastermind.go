@@ -18,7 +18,7 @@ func applyOverlook(overlookFiles []string) error {
 		return err
 	}
 
-	fmt.Println("[Complted] git skip worktree")
+	fmt.Println("[Completed] git skip worktree")
 
 	return nil
 

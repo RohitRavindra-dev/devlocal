@@ -2,13 +2,14 @@ package apply
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/RohitRavindra-dev/devlocal/internal/filesystem"
 	"github.com/RohitRavindra-dev/devlocal/internal/git"
 )
 
 func applyOverlook(overlookFiles []string) error {
-	fmt.Println("[Running] git skip worktree for files: ", overlookFiles)
+	fmt.Println("[Running] git skip worktree for files: ", strings.Join(overlookFiles, ", "))
 	if len(overlookFiles) == 0 {
 		fmt.Println("[Warn] No files found in overlook section of devlocal config, skipping")
 		return nil

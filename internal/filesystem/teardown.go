@@ -8,6 +8,6 @@ import (
 )
 
 func TearDownDevLocalFilesystem() error {
-	fmt.Printf("Removing %s and all underlying evidence\n", config.PROJECT_ROOT)
+	fmt.Printf("[Running] teardown of %s and all underlying evidence\n", config.PROJECT_ROOT)
 	return os.RemoveAll(config.PROJECT_ROOT)
 }

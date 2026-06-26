@@ -24,7 +24,7 @@ func exists(path string) (bool, error) {
 
 func LoadDevlocalConfig() (*config.DevlocalConfigYaml, error) {
 	data, err := os.ReadFile(filepath.Join(config.PROJECT_ROOT, config.CONFIG_FILE_NAME))
-
+	var x
 	if err != nil {
 		return nil, err
 	}

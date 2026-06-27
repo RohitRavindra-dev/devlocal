@@ -1,0 +1,42 @@
+version: 2
+
+project_name: devlocal
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: devlocal
+    binary: devlocal
+    main: .
+    env:
+      - CGO_ENABLED=0
+
+    goos:
+      - windows
+      - linux
+      - darwin
+
+    goarch:
+      - amd64
+      - arm64
+
+    ldflags:
+      - >-
+        -s -w
+        -X github.com/RohitRavindra-dev/devlocal/internal/config.Version={{ .Version }}
+        -X github.com/RohitRavindra-dev/devlocal/internal/config.Commit={{ .Commit }}
+        -X github.com/RohitRavindra-dev/devlocal/internal/config.Date={{ .Date }}
+
+archives:
+  - formats: [zip]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+
+checksum:
+  name_template: checksums.txt
+
+release:
+  draft: false
+  prerelease: auto

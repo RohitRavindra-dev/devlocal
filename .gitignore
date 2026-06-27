@@ -1,4 +1,5 @@
 PLAN.md
 devlocal.exe
 
-.devlocal
+.devlocal/backups/
+.devlocal/state.json

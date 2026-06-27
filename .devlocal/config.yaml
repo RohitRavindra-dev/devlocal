@@ -1,6 +1,0 @@
-version: 1
-overlook:
-  - blah.mod
-  - go.mod
-  - internal\git\worktrees.go
-patches: []

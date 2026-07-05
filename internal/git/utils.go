@@ -11,7 +11,7 @@ func executeGitCommand(args []string) error {
 	out, err := cmd.CombinedOutput()
 
 	if err != nil {
-		return fmt.Errorf("[Error] Failed to run Skip Worktree: %s", out)
+		return fmt.Errorf("Failed to run git command: %s", out)
 	}
 
 	return nil

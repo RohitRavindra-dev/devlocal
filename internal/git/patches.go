@@ -2,12 +2,23 @@ package git
 
 import "fmt"
 
-func Generate(files []string) error {
+func checkPatchValidity(patchFile string) error {
+	checkApplyArgs := append(
+		[]string{
+			"apply",
+			"--check",
+		},
+		patchFile,
+	)
 
-	filesToDiff := sanitizeToTrackedFiles(files)
+	return executeGitCommand(checkApplyArgs)
+}
 
-	if len(filesToDiff) == 0 {
-		return fmt.Errorf("[Error] No files provided to generate patches that are being tracked by git")
+func ApplyPatches(filesToPatch []string) error {
+	for _, filePath := range filesToPatch {
+		if err := checkPatchValidity(filePath); err != nil {
+			fmt.Printf("\t[Error] while trying to patch file %s : %s\n", filePath, err.Error())
+		}
 	}
 
 	return nil

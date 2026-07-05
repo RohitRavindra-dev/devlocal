@@ -15,7 +15,16 @@ func applyPatches(patchFiles []string) error {
 	}
 
 	fmt.Println("[Running] patch for files: ", strings.Join(patchFiles, ", "))
+	if len(patchFiles) == 0 {
+		fmt.Println("[Warn] No patche files found in patches section of devloca config, skipping")
+		return nil
+	}
 
+	if err := git.ApplyPatches(patchFiles); err != nil {
+		return err
+	}
+
+	fmt.Println("[Completed] applying patches")
 	return nil
 }
 
@@ -53,5 +62,6 @@ func Run() error {
 		return overlookErr
 	}
 
+	fmt.Println("[Completed] applying devlocal changes")
 	return nil
 }

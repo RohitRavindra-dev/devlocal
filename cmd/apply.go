@@ -17,7 +17,6 @@ var applyCmd = &cobra.Command{
 		// check for setup
 		return filesystem.ValidateDevLocalFilesystem()
 	},
-
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return apply.Run()
 	},

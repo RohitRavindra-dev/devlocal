@@ -5,18 +5,6 @@ import (
 	"os/exec"
 )
 
-func executeGitCommand(args []string) error {
-	cmd := exec.Command("git", args...)
-
-	out, err := cmd.CombinedOutput()
-
-	if err != nil {
-		return fmt.Errorf("[Error] Failed to run Skip Worktree: %s", out)
-	}
-
-	return nil
-}
-
 func SkipWorkTree(files []string) error {
 
 	filesToSkip := sanitizeToTrackedFiles(files)
@@ -47,18 +35,6 @@ func NoSkipWorkTree(files []string) error {
 		filesToRevert...,
 	)
 	return executeGitCommand(skipWorktreeArgs)
-}
-
-func isFileTracked(file string) bool {
-	trackCheckArgs := []string{
-		"ls-files",
-		"--error-unmatch",
-		file,
-	}
-
-	err := executeGitCommand(trackCheckArgs)
-
-	return err == nil
 }
 
 func sanitizeToTrackedFiles(files []string) []string {

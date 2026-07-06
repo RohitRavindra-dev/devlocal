@@ -121,7 +121,7 @@ func ValidatePatchesSetup() error {
 
 	if pderr != nil || !pdinfo.IsDir() {
 		return fmt.Errorf("%s directory has gone missing from inside your devlocal setup!!\n"+
-			"\tIf you think something is wrong run `devlocal cleanup` and reinit.\n\t\t[Note] this will remove the configs in %s so best backitup\n", config.PATCHES_DIR, config.CONFIG_FILE_NAME)
+			"\tIf you think something is wrong run `devlocal cleanup` and reinit.\n\t\t[Note] this will remove the configs in %s so best backitup", config.PATCHES_DIR, config.CONFIG_FILE_NAME)
 	}
 
 	return nil

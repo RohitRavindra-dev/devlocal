@@ -14,10 +14,35 @@ func checkPatchValidity(filePath string) error {
 	return executeGitCommand(checkApplyArgs)
 }
 
+func checkRevertPatchValidity(filePath string) error {
+	checkApplyArgs := append(
+		[]string{
+			"apply",
+			"--check",
+			"--reverse",
+		},
+		filePath,
+	)
+
+	return executeGitCommand(checkApplyArgs)
+}
+
 func patchFile(filePath string) error {
 	patchFileArgs := append(
 		[]string{
 			"apply",
+		},
+		filePath,
+	)
+
+	return executeGitCommand(patchFileArgs)
+}
+
+func unpatchFile(filePath string) error {
+	patchFileArgs := append(
+		[]string{
+			"apply",
+			"--reverse",
 		},
 		filePath,
 	)
@@ -33,6 +58,20 @@ func ApplyPatches(filesToPatch []string) error {
 		}
 		if err := patchFile(filePath); err != nil {
 			fmt.Printf("\t[Error] while trying to patch file %s : %s\n", filePath, err.Error())
+		}
+	}
+
+	return nil
+}
+
+func RevertPatches(filesToUnpatch []string) error {
+	for _, filePath := range filesToUnpatch {
+		if err := checkRevertPatchValidity(filePath); err != nil {
+			fmt.Printf("\t[Error] while trying to unpatch file %s : %s\n", filePath, err.Error())
+			continue
+		}
+		if err := unpatchFile(filePath); err != nil {
+			fmt.Printf("\t[Error] while trying to unpatch file %s : %s\n", filePath, err.Error())
 		}
 	}
 

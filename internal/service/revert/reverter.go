@@ -8,6 +8,26 @@ import (
 	"github.com/RohitRavindra-dev/devlocal/internal/git"
 )
 
+func revertPatches(patchedfiles []string) error {
+	if err := filesystem.ValidatePatchesSetup(); err != nil {
+		return err
+	}
+
+	fmt.Println("[Running] revert patches for files: ", strings.Join(patchedfiles, ", "))
+
+	if len(patchedfiles) == 0 {
+		fmt.Println("[Warn] No patch files found in patches section of devlocal config, skipping")
+		return nil
+	}
+
+	if err := git.RevertPatches(patchedfiles); err != nil {
+		return err
+	}
+
+	fmt.Println("[Completed] reverting patches")
+	return nil
+}
+
 func revertOverlook(overlookedFiles []string) error {
 	fmt.Println("[Running] revert git skip worktree for files: ", strings.Join(overlookedFiles, ", "))
 
@@ -34,12 +54,16 @@ func Run() error {
 		return err
 	}
 
+	//revert patches applied
+	if patchesRevertErr := revertPatches(config.Patches); patchesRevertErr != nil {
+		return patchesRevertErr
+	}
+
 	// revert overlooked files
 	if overlookRevertErr := revertOverlook(config.Overlook); overlookRevertErr != nil {
 		return overlookRevertErr
 	}
 
-	//TODO: revert patches
-
+	fmt.Println("[Completed] reverting devlocal changes")
 	return nil
 }

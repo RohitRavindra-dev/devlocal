@@ -16,7 +16,7 @@ func applyPatches(patchFiles []string) error {
 
 	fmt.Println("[Running] patch for files: ", strings.Join(patchFiles, ", "))
 	if len(patchFiles) == 0 {
-		fmt.Println("[Warn] No patche files found in patches section of devloca config, skipping")
+		fmt.Println("[Warn] No patch files found in patches section of devlocal config, skipping")
 		return nil
 	}
 

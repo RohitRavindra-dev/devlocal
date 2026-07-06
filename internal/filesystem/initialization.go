@@ -29,6 +29,13 @@ func createRootDirectory() error {
 	return os.Mkdir(config.PROJECT_ROOT, 0755)
 }
 
+func createPatchesDirectory() error {
+	return os.MkdirAll(
+		filepath.Join(config.PROJECT_ROOT, config.PATCHES_DIR),
+		0755,
+	)
+}
+
 func createConfigFile() error {
 	err := os.WriteFile(
 		filepath.Join(config.PROJECT_ROOT, config.CONFIG_FILE_NAME),
@@ -64,8 +71,13 @@ func InitilizeDevLocalFilesystem() error {
 	if err := createConfigFile(); err != nil {
 		return err
 	}
-
+	// populate config file with basics
 	if err := seedYamlConfigFile(); err != nil {
+		return err
+	}
+
+	// where my patches will go
+	if err := createPatchesDirectory(); err != nil {
 		return err
 	}
 
@@ -99,6 +111,17 @@ func ValidateDevLocalFilesystem() error {
 		if info.IsDir() {
 			return fmt.Errorf("%s should be a file, someone done messed up! My advice, setup again", file)
 		}
+	}
+
+	return nil
+}
+
+func ValidatePatchesSetup() error {
+	pdinfo, pderr := os.Stat(filepath.Join(config.PROJECT_ROOT, config.PATCHES_DIR))
+
+	if pderr != nil || !pdinfo.IsDir() {
+		return fmt.Errorf("%s directory has gone missing from inside your devlocal setup!!\n"+
+			"\tIf you think something is wrong run `devlocal cleanup` and reinit.\n\t\t[Note] this will remove the configs in %s so best backitup", config.PATCHES_DIR, config.CONFIG_FILE_NAME)
 	}
 
 	return nil

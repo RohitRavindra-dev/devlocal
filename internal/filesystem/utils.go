@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func FileExists(path string) (bool, error) {
+func PathExists(path string) (bool, error) {
 	info, err := os.Stat(path)
 
 	if os.IsNotExist(err) {
@@ -20,7 +20,15 @@ func FileExists(path string) (bool, error) {
 		return false, err
 	}
 
-	if info.IsDir() {
+	return info.IsDir(), nil
+}
+
+func FileExists(path string) (bool, error) {
+	isDir, err := PathExists(path)
+
+	if err != nil {
+		return false, err
+	} else if isDir {
 		return false, fmt.Errorf("%s is a directory, expected a file", path)
 	}
 

@@ -9,7 +9,7 @@ import (
 )
 
 var patchRecordCmd = &cobra.Command{
-	Use:   "record <file>",
+	Use:   "record <file/directory>",
 	Short: "Record local modifications as a DevLocal patch",
 	Args:  cobra.ExactArgs(1),
 	PreRunE: func(cmd *cobra.Command, args []string) error {
@@ -18,8 +18,8 @@ var patchRecordCmd = &cobra.Command{
 		return filesystem.ValidateDevLocalFilesystem()
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		file := args[0]
-		return patch.Run(file)
+		path := args[0]
+		return patch.Run(path)
 	},
 }
 

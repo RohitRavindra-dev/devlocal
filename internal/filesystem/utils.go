@@ -9,6 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// bool: isDir err: if path doesnt exists
 func PathExists(path string) (bool, error) {
 	info, err := os.Stat(path)
 
